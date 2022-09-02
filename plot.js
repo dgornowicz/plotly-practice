@@ -104,24 +104,34 @@ d3.json("samples.json").then((data) => {
 // buildMetadata function where the parameter is generated.
 function buildGaugeChart(washings) {
 
-var gaugeData = {
-  domain: { x: [0, 10], y: [0, 10] },
-  value: washings,
-  type: 'indicator',
-  mode: 'gauge+number'      
+  var gaugeData = [{
+    domain: { x: [0, 1], y: [0, 1] },
+    value: washFreq,
+    type: "indicator",
+    mode: "gauge+number",
+    title: { text: "<b> Belly Button Washing Frequency</b> <br> # of Scrubs per Week" },
+    gauge: {
+      axis: { range: [null, 10], tickwidth: 2, tickcolor: "black" },
+      bar: { color: "black" },
+      steps: [
+        { range: [0, 2], color: "firebrick" },
+        { range: [2, 4], color: "darkorange" },
+        { range: [4, 6], color: "greenyellow" },
+        { range: [6, 8], color: "lightseagreen" },
+        { range: [8, 10], color: "dodgerblue" }
+      ],
+      threshold: {
+        value: washFreq,
+      }
+    },
+    
+  }];
+
+  var gaugeLayout = { 
+    width: 450, height: 400, margin: { t: 0, b: 0 },
+    font: { color: "black"}
   };
 
-var layoutGauge = {
-  title: 'Belly Button Washing Frequency',
-  annotations: [{
-    text: 'Scrubs per Week', 
-    showarrow: false, 
-    align: 'center',
-    x: 0.5,
-    y: 1.15}],
-    paper_bgcolor: '#00ffff'
-};
-
-Plotly.newPlot('gauge', [gaugeData], layoutGauge);
+Plotly.newPlot('gauge', [gaugeData], gaugeLayout);
 
 }
